@@ -1,0 +1,12 @@
+# 阶段一
+FROM verystar/golang:1.16.6 as builder
+WORKDIR /build
+COPY . .
+RUN go mod tidy \
+    && go build -mod=vendor -o app .
+
+# 阶段二
+FROM verystar/debian:10.10
+COPY --from=builder /build/app /app/app
+COPY --from=builder /build/config.yaml /app/config.yaml
+ENTRYPOINT ["/app/app"]

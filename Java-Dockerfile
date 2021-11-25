@@ -1,0 +1,13 @@
+# 阶段一
+FROM gradle:6.8.3-jdk15 as builder
+WORKDIR /build
+COPY . .
+RUN bash gradlew clean build -x test
+
+# 阶段二
+FROM openjdk:15.0.2
+
+WORKDIR /app
+COPY . .
+CMD ["java", "-Djava.security.egd=file:/dev/urandom", "-jar", "/app/app.jar"]
+

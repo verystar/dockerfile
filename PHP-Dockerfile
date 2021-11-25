@@ -1,0 +1,5 @@
+# FROM verystar/php:7.1-fpm
+FROM verystar/php:7.3-fpm
+
+WORKDIR /usr/share/nginx/html
+COPY --chown=www-data . .
